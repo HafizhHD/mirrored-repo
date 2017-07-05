@@ -24,14 +24,16 @@ var scoresheetGenerator = function () {
      * Add a new scoresheet in the queue for generating PDF
      * @param {string} player   
      * @param {integer} index  
+	 * @param {char} group 
      * @param {string} event  all events except 3x3 cube multiple-blindfolded
      * @param {integer} round
      * @param {integer} attempts number of attempts of the event
      */
-    this.addScoresheet = function (player, index, event, round, attempts) {
+    this.addScoresheet = function (player, index, group, event, round, attempts) {
         var scoresheet = {
             Name    : player,
             ID      : index,
+			Group	: group,
             Event   : event,
             Round   : 'Round ' + round
         };
@@ -55,13 +57,15 @@ var scoresheetGenerator = function () {
      * Add a new multiple-blindfolded scoresheet in the queue for generating PDF
      * @param {string} player   
      * @param {integer} index  
+	 * @param {char} group
      * @param {integer} round
      * @param {integer} attempts number of attempts of the event
      */
-    this.addMBFScoresheet = function (player, index, round, attempts) {
+    this.addMBFScoresheet = function (player, index, group, round, attempts) {
         var scoresheet = {
             Name    : player,
             ID      : index,
+			Group	: group,
             Event   : "3×3 Multi-BF",
             Round   : 'Round ' + round
         };
@@ -207,10 +211,11 @@ var scoresheetGenerator = function () {
     }
 
     var header = [
-        {key: 'ID', width : 28},
+        {key: 'ID', width : 25},
         {key: 'Name', width : 360},
+		{key: 'Group' , width : 13},
         {key: 'Event', width : 122},
-        {key: 'Round', width : 65}
+        {key: 'Round', width : 55}
     ];
 
     var columns = [
