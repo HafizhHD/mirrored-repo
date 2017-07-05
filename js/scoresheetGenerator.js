@@ -33,7 +33,7 @@ var scoresheetGenerator = function () {
         var scoresheet = {
             Name    : player,
             ID      : index,
-			Group	: 'Group ' + group,
+			Group	: 'Group: ' + group,
             Event   : event,
             Round   : round
         };
@@ -67,7 +67,7 @@ var scoresheetGenerator = function () {
         var scoresheet = {
             Name    : player,
             ID      : index,
-			Group	: 'Group ' + group,
+			Group	: 'Group: ' + group,
             Event   : "3×3 Multi-BF",
             Round   : round
         };
