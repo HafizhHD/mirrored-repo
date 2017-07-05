@@ -87,7 +87,7 @@ function generateByPlayer(events, numberOfAttempts, generator) {
             }
             if (row[Number(e) + 6] == '1') {
                 if (eventCode == '333mbf') {
-                    generator.addMBFScoresheet(row[1], id, ,p ,1, numberOfAttempts[eventCode]);
+                    generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
                 } else {
                     generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
                 }   
