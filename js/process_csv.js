@@ -15,7 +15,7 @@ function readFile (evt) {
         var csv = this.result;
         regList = csv.csvToArray({rSep:'\n'});
         var headerRow = regList[0];
-        regList = _.sortBy(_.rest(regList, 1), 1);
+        //regList = _.sortBy(_.rest(regList, 1), 1);
         events = headerRow.slice(6, -3);
         attempsHTML();
     }
@@ -73,7 +73,7 @@ function getNumberOfAttempts() {
 
 function generateByPlayer(events, numberOfAttempts, generator) {
     _.each(regList, function (row, id) {
-        id += 1;
+        id +=1;
         for (var e in events) {
             var eventCode = events[e];
             if (eventCode == '333fm'){
