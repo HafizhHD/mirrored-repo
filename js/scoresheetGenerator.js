@@ -24,7 +24,7 @@ var scoresheetGenerator = function () {
      * Add a new scoresheet in the queue for generating PDF
      * @param {string} player   
      * @param {integer} index  
-	 * @param {char} group 
+	 * @param {integer} group 
      * @param {string} event  all events except 3x3 cube multiple-blindfolded
      * @param {integer} round
      * @param {integer} attempts number of attempts of the event
@@ -57,7 +57,7 @@ var scoresheetGenerator = function () {
      * Add a new multiple-blindfolded scoresheet in the queue for generating PDF
      * @param {string} player   
      * @param {integer} index  
-	 * @param {char} group
+	 * @param {integer} group
      * @param {integer} round
      * @param {integer} attempts number of attempts of the event
      */

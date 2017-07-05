@@ -161,9 +161,9 @@ $(function(){
         var generator = new scoresheetGenerator();
         for (var i = 0; i < number; i++) {
             if (eventName != '3×3 Multi-BF') {
-                generator.addScoresheet('', '', eventName, round, attempts);
+                generator.addScoresheet('', '', '', eventName, round, attempts);
             } else {
-                generator.addMBFScoresheet('', '', round, attempts);
+                generator.addMBFScoresheet('', '', '', round, attempts);
             }   
         }
         generator.generatePDF(competitionName +' '+ eventName +' Round '+round);
