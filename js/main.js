@@ -184,6 +184,7 @@ $(function(){
         for (var i = 1; i <= 4; i++){
             roundText += '<option>' + i + '</option>';
         }
+		roundText += '<option>Final</option>';
         $('#selectRound').html(roundText);
 
 

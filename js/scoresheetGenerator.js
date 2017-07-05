@@ -33,10 +33,12 @@ var scoresheetGenerator = function () {
         var scoresheet = {
             Name    : player,
             ID      : index,
-			Group	: group,
+			Group	: 'Group ' + group,
             Event   : event,
-            Round   : 'Round ' + round
+            Round   : round
         };
+		if(round === '1' || round === '2' || round === '3' || round === '4') scoresheet.Round = 'Round ' + round;
+    
         switch(attempts) {
             case 5:
                 (this.five).push(scoresheet);
@@ -65,12 +67,11 @@ var scoresheetGenerator = function () {
         var scoresheet = {
             Name    : player,
             ID      : index,
-			Group	: group,
+			Group	: 'Group ' + group,
             Event   : "3×3 Multi-BF",
-            Round   : 'Round ' + round
+            Round   : round
         };
-        scoresheet.attempts = attempts;
-        (this.mbf).push(scoresheet);
+		if(round === '1' || round === '2' || round === '3' || round === '4') scoresheet.Round = 'Round ' + round;
     }
 
     /**
@@ -212,8 +213,8 @@ var scoresheetGenerator = function () {
 
     var header = [
         {key: 'ID', width : 28},
-        {key: 'Name', width : 345},
-		{key: 'Group' , width : 15},
+        {key: 'Name', width : 290},
+		{key: 'Group' , width : 70},
         {key: 'Event', width : 122},
         {key: 'Round', width : 65}
     ];

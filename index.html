@@ -12,7 +12,7 @@
 		<div class="container">
 			<div class="blog-header" id="title">
 				<h1 class = "blog-title"> WCA Competition Scoresheet Generator</h1>
-				<h2 class = "blog-title"> This is a slight changed version from http://zhouyichen.github.io/scoresheet/</h2>
+				<h4 class = "blog-title"> This is a slight changed version from http://zhouyichen.github.io/scoresheet/</h4>
 			</div>
 			<h3>Generate First Rounds Scoresheet</h3>
 			<p>Upload the registration CSV file below:</p>
@@ -31,6 +31,11 @@
 				</p>
 				<!-- <button type="button" class="btn btn-default" id='generate'> Generate</button> -->
 			</div></div>
+			<div class='col-sm-4 col-xs-12'>
+				Competitors per Group
+				<input type="number" class="form-control" id='compGroup1' min="1" value="4">
+			</div>
+			<br><br><br>
 			<div class='row' id='numberOfAttempts'></div>
 			<br>
 			<button type="button" class="btn btn-default" id='generate'> Generate</button>
@@ -61,6 +66,8 @@
 				<button type="button" class="btn btn-default" id='generateEmpty'>Generate</button>
 			</div>
 		</div>
+		<br>
+		<br>
 		<script src="js/libraries/jquery-1.11.3.min.js"></script>
 		<script src="bootstrap/bootstrap.min.js"></script>
 		<script src="bootstrap/bootstrap-filestyle.min.js"></script>

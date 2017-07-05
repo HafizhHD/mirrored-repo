@@ -27,11 +27,12 @@ $(function(){
     $('#generate').mouseup(function (){
         var generator = new scoresheetGenerator();
         var numberOfAttempts = getNumberOfAttempts();
+		var compGroup = $('#compGroup1').val();
         if (isGroupByPlayer()) {
-            generateByPlayer(events, numberOfAttempts, generator);
+            generateByPlayer(events, compGroup, numberOfAttempts, generator);
         }
         else { // group by events
-            generateByEvent(events, numberOfAttempts, generator);   
+            generateByEvent(events, compGroup, numberOfAttempts, generator);   
         }
         generator.generatePDF('First Round Scoresheets');
     });
@@ -72,34 +73,40 @@ function getNumberOfAttempts() {
     return results;
 }
 
-function generateByPlayer(events, numberOfAttempts, generator) {
-	totalGroup = 5;
-	p = 1;
-	totalComp = regList.length;
-	group = totalComp/totalGroup;
-    _.each(regList, function (row, id) {
-        id += 1;
-		if((id%group)+1>group) p += 1;
-        for (var e in events) {
-            var eventCode = events[e];
-            if (eventCode == '333fm'){
-                continue;
-            }
-            if (row[Number(e) + 6] == '1') {
-                if (eventCode == '333mbf') {
-                    generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
-                } else {
-                    generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
-                }   
-            }
-        }
-    });
+function generateByPlayer(events, compGroup, numberOfAttempts, generator) {
+	generateByEvent(events, compGroup, numberOfAttempts, generator);
+    generator.five = _.sortBy(generator.five, 'ID');
+    generator.three = _.sortBy(generator.three, 'ID');
+    generator.two = _.sortBy(generator.two, 'ID');
+    generator.one = _.sortBy(generator.one, 'ID');
 }
 
-function generateByEvent(events, numberOfAttempts, generator) {
-    generateByPlayer(events, numberOfAttempts, generator);
-    generator.five = _.sortBy(generator.five, 'Event');
-    generator.three = _.sortBy(generator.three, 'Event');
-    generator.two = _.sortBy(generator.two, 'Event');
-    generator.one = _.sortBy(generator.one, 'Event');
+function generateByEvent(events, compGroup, numberOfAttempts, generator) {
+    
+	//totalGroup = 5;
+	totalComp = regList.length;
+	//group = totalComp/totalGroup;
+	group = compGroup;
+    for (var e in events) {
+		p = 1;
+		count = 0;
+		var eventCode = events[e];
+		_.each(regList, function (row, id) {
+			id += 1;
+			if(count+1>group) {
+				p += 1;
+				count = 0;
+			}
+			if (eventCode != '333fm'){
+				if (row[Number(e) + 6] == '1') {
+					if (eventCode == '333mbf') {
+						generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
+					} else {
+						generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
+					}   
+					count += 1;
+				}
+			}
+        });
+    }
 }
