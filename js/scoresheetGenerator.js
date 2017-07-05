@@ -211,9 +211,9 @@ var scoresheetGenerator = function () {
     }
 
     var header = [
-        {key: 'ID', width : 25},
-        {key: 'Name', width : 360},
-		{key: 'Group' , width : 13},
+        {key: 'ID', width : 28},
+        {key: 'Name', width : 350},
+		{key: 'Group' , width : 20},
         {key: 'Event', width : 122},
         {key: 'Round', width : 55}
     ];

@@ -72,8 +72,13 @@ function getNumberOfAttempts() {
 }
 
 function generateByPlayer(events, numberOfAttempts, generator) {
+	totalGroup = 5;
+	p = 1;
+	totalComp = regList.length;
+	group = totalComp/totalGroup;
     _.each(regList, function (row, id) {
-        id +=1;
+        id += 1;
+		if((id%group)+1>group) p += 1;
         for (var e in events) {
             var eventCode = events[e];
             if (eventCode == '333fm'){
@@ -81,9 +86,9 @@ function generateByPlayer(events, numberOfAttempts, generator) {
             }
             if (row[Number(e) + 6] == '1') {
                 if (eventCode == '333mbf') {
-                    generator.addMBFScoresheet(row[1], id, 1, numberOfAttempts[eventCode]);
+                    generator.addMBFScoresheet(row[1], id, ,p ,1, numberOfAttempts[eventCode]);
                 } else {
-                    generator.addScoresheet(row[1], id, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
+                    generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
                 }   
             }
         }
