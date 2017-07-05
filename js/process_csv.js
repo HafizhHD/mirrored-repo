@@ -2,9 +2,14 @@ var csvInput = document.getElementById('csv');
 csvInput.addEventListener('change', readFile, false);
 var regList;
 var events;
+var groups = "";
 
 function isGroupByPlayer(){
     return ($('input[name=grouping]:checked', '#grouping').val() == "groupByPlayer");
+}
+
+function isGroupPerEvent(){
+	return ($('input[name=divGroup]:checked', '#divGroup').val() == "divGroupByEvent");
 }
 
 function readFile (evt) {
@@ -25,16 +30,23 @@ function readFile (evt) {
 
 $(function(){
     $('#generate').mouseup(function (){
+		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>Competition Grouping</h1></div>";
         var generator = new scoresheetGenerator();
         var numberOfAttempts = getNumberOfAttempts();
 		var compGroup = $('#compGroup1').val();
         if (isGroupByPlayer()) {
-            generateByPlayer(events, compGroup, numberOfAttempts, generator);
+            if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
+			else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
         }
         else { // group by events
-            generateByEvent(events, compGroup, numberOfAttempts, generator);   
+            if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
+			else generateByEventAll(events, compGroup, numberOfAttempts, generator);
         }
         generator.generatePDF('First Round Scoresheets');
+		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
+		window.open("","Tes").document.write(groups);
+		//myWindow.document.open();
+		//myWindow.document.close();
     });
 });
 
@@ -87,15 +99,22 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 	totalComp = regList.length;
 	//group = totalComp/totalGroup;
 	group = compGroup;
+	groups += "<br><br>";
     for (var e in events) {
 		p = 1;
 		count = 0;
+		g = 0;
 		var eventCode = events[e];
+		groups += "<br><div class='row'><h2><u><i><b>"+eventNames[eventCode]+"</b></i></u></h2>";
 		_.each(regList, function (row, id) {
 			id += 1;
-			if(count+1>group) {
+			if(count>=group) {
 				p += 1;
 				count = 0;
+			}
+			if(g!=p) {
+				groups += "<h3><b>Group "+p+"</h3></b>";
+				g=p;
 			}
 			if (eventCode != '333fm'){
 				if (row[Number(e) + 6] == '1') {
@@ -103,10 +122,56 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 						generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
 					} else {
 						generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
-					}   
+					}
+					groups += "<div>"+row[1]+"</div>";
 					count += 1;
 				}
 			}
         });
+		groups += "</div>";
     }
+}
+
+function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
+	//totalGroup = 5;
+	totalComp = regList.length;
+	//group = totalComp/totalGroup;
+	group = compGroup;
+	groups += "<br><br>";
+	p = 1;
+	g = 0;
+	_.each(regList, function (row, id) {
+        id += 1;
+		if(((id-2)%group)+1>=group) {
+			p += 1;
+			groups += "</div>";
+		}
+		if(g!=p) {
+			groups += "<div class='row'><br><h3><b>Group "+p+"</h3></b>";
+			g=p;
+		}
+        for (var e in events) {
+            var eventCode = events[e];
+            if (eventCode == '333fm'){
+                continue;
+            }
+            if (row[Number(e) + 6] == '1') {
+				if (eventCode == '333mbf') {
+					generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
+				} else {
+					generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
+				}
+			}
+        }
+		groups += "<div>"+row[1]+"</div>";
+    });
+}
+
+function generateByEventAll(events, compGroup, numberOfAttempts, generator) {
+    generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
+    generator.five = _.sortBy(generator.five, 'Event');
+    generator.three = _.sortBy(generator.three, 'Event');
+    generator.two = _.sortBy(generator.two, 'Event');
+    generator.one = _.sortBy(generator.one, 'Event');
+	
 }

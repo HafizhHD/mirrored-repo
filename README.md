@@ -1,4 +1,4 @@
 # scoresheet
 
-This is a slight changed version from http://zhouyichen.github.io/scoresheet/
-javascript Scoresheet generator for WCA competitions
+##This is a modified version of http://zhouyichen.github.io/scoresheet/, please consider to visit the page.
+##Scoresheet generator for WCA competitions

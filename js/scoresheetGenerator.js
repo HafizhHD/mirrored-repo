@@ -37,7 +37,7 @@ var scoresheetGenerator = function () {
             Event   : event,
             Round   : round
         };
-		if(round === '1' || round === '2' || round === '3' || round === '4') scoresheet.Round = 'Round ' + round;
+		if(round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
     
         switch(attempts) {
             case 5:
@@ -71,7 +71,7 @@ var scoresheetGenerator = function () {
             Event   : "3×3 Multi-BF",
             Round   : round
         };
-		if(round === '1' || round === '2' || round === '3' || round === '4') scoresheet.Round = 'Round ' + round;
+		if(round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
     }
 
     /**

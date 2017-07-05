@@ -12,7 +12,7 @@
 		<div class="container">
 			<div class="blog-header" id="title">
 				<h1 class = "blog-title"> WCA Competition Scoresheet Generator</h1>
-				<h4 class = "blog-title"> This is a slight changed version from http://zhouyichen.github.io/scoresheet/</h4>
+				<h4 class = "blog-title"> This is a modified version of http://zhouyichen.github.io/scoresheet/, please consider visiting the page.</h4>
 			</div>
 			<h3>Generate First Rounds Scoresheet</h3>
 			<p>Upload the registration CSV file below:</p>
@@ -26,6 +26,17 @@
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="grouping" value="groupByEvent"> Group by Events
+						</label>
+					</form>
+				</p>
+				<p>
+					<form class="input-group" id="divGroup">
+						<label class="radio-inline">
+							<input type="radio" name="divGroup" value="divGroupByTotal" checked> Divide Groups by Total Competitors
+						</label>
+						<br>
+						<label class="radio-inline">
+							<input type="radio" name="divGroup" value="divGroupByEvent"> Divide Groups by Competitors per Event
 						</label>
 					</form>
 				</p>
