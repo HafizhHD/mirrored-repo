@@ -212,10 +212,10 @@ var scoresheetGenerator = function () {
 
     var header = [
         {key: 'ID', width : 28},
-        {key: 'Name', width : 350},
-		{key: 'Group' , width : 20},
+        {key: 'Name', width : 345},
+		{key: 'Group' , width : 15},
         {key: 'Event', width : 122},
-        {key: 'Round', width : 55}
+        {key: 'Round', width : 65}
     ];
 
     var columns = [
