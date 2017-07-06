@@ -3,6 +3,8 @@ csvInput.addEventListener('change', readFile, false);
 var regList;
 var events;
 var groups = "";
+var	groupArr = [];
+var groupArr1 = [];
 
 function isGroupByPlayer(){
     return ($('input[name=grouping]:checked', '#grouping').val() == "groupByPlayer");
@@ -23,6 +25,7 @@ function readFile (evt) {
         //regList = _.sortBy(_.rest(regList, 1), 1);
 		regList = _.sortBy(_.rest(regList, 1), 0);
         events = headerRow.slice(6, -3);
+		alert(typeof events);
         attempsHTML();
     }
     reader.readAsText(file);
@@ -101,7 +104,6 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 	group = compGroup;
 	groups += "<br><br>";
     for (var e in events) {
-		p = 1;
 		count = 0;
 		g = 0;
 		var eventCode = events[e];
@@ -138,18 +140,30 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 	//group = totalComp/totalGroup;
 	group = compGroup;
 	groups += "<br><br>";
-	p = 1;
-	g = 0;
+	//p = 1;
+	//g = 0;
+	for(var i = 0; i<(totalComp/group)+1; i++) {
+		groupArr1.push(0);
+	}
 	_.each(regList, function (row, id) {
+		p = Math.floor((Math.random()*totalComp/group)+1);
+		while(groupArr1[p-1]>=group) {
+			p = Math.floor((Math.random()*totalComp/group)+1);
+		}
+		//console.log(p);
         id += 1;
-		if(((id-2)%group)+1>=group) {
+		/*if(((id-2)%group)+1>=group) {
 			p += 1;
 			groups += "</div>";
 		}
 		if(g!=p) {
 			groups += "<div class='row'><br><h3><b>Group "+p+"</h3></b>";
 			g=p;
-		}
+		}*/
+		var obj = {
+			Name	: row[1],
+			Group	: p
+		};
         for (var e in events) {
             var eventCode = events[e];
             if (eventCode == '333fm'){
@@ -163,8 +177,28 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 				}
 			}
         }
-		groups += "<div>"+row[1]+"</div>";
+		groupArr1[p-1] += 1;
+		//groups += "<div>"+row[1]+"</div>";
+		groupArr.push(obj);
     });
+	arrangeHtml();
+}
+
+function arrangeHtml() {
+	groupArr.sort(function(a,b) {
+		return a.Group - b.Group;
+	});
+	for(var i = 0; i<groupArr.length; i++) {
+		if(i!==0) {
+			if(groupArr[i].Group > groupArr[i-1].Group) groups += "</div><div class='row'><br><h3><b>Group "+groupArr[i].Group+"</h3></b>";
+		}
+		else {
+			groups += "<div class='row'><br><h3><b>Group "+groupArr[i].Group+"</h3></b>";
+		}
+		//alert(groupArr[i].Name + " " + groupArr[i].Group);
+		groups += "<div>"+groupArr[i].Name+"</div>";
+	}
+	groups += "</div>";
 }
 
 function generateByEventAll(events, compGroup, numberOfAttempts, generator) {
