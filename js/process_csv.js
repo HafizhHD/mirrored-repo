@@ -25,7 +25,7 @@ function readFile (evt) {
         //regList = _.sortBy(_.rest(regList, 1), 1);
 		regList = _.sortBy(_.rest(regList, 1), 0);
         events = headerRow.slice(6, -3);
-		alert(typeof events);
+		//alert(typeof events);
         attempsHTML();
     }
     reader.readAsText(file);
