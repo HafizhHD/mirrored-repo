@@ -1,4 +1,14 @@
 var csvInput = document.getElementById('csv');
+var compName;
+
+document.getElementById('csv').onchange = function() {
+	compName = document.getElementById('csv').value;
+	compName = compName.slice(0,compName.length-17);
+	compName = compName.replace(/^.*\\/, '');
+	compname = compName.replace(/.*[\/\\]/, '');
+}
+
+
 csvInput.addEventListener('change', readFile, false);
 var regList;
 var events;
@@ -33,7 +43,8 @@ function readFile (evt) {
 
 $(function(){
     $('#generate').mouseup(function (){
-		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>Competition Grouping</h1></div>";
+		
+		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>Competition Grouping</h1></div><p>* Please copy the groups before leaving!</p>";
         var generator = new scoresheetGenerator();
         var numberOfAttempts = getNumberOfAttempts();
 		var compGroup = $('#compGroup1').val();
@@ -45,9 +56,9 @@ $(function(){
             if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
 			else generateByEventAll(events, compGroup, numberOfAttempts, generator);
         }
-        generator.generatePDF('First Round Scoresheets');
+        generator.generatePDF(compName, 'First Round Scoresheets');
 		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
-		window.open("","Tes").document.write(groups);
+		window.open('','').document.write(groups);
 		//myWindow.document.open();
 		//myWindow.document.close();
     });
@@ -99,7 +110,7 @@ function generateByPlayer(events, compGroup, numberOfAttempts, generator) {
 function generateByEvent(events, compGroup, numberOfAttempts, generator) {
     
 	//totalGroup = 5;
-	totalComp = regList.length;
+	//totalComp = regList.length-1;
 	//group = totalComp/totalGroup;
 	group = compGroup;
 	groups += "<br><br>";
@@ -136,19 +147,19 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 
 function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 	//totalGroup = 5;
-	totalComp = regList.length;
+	totalComp = regList.length-1;
 	//group = totalComp/totalGroup;
 	group = compGroup;
 	groups += "<br><br>";
 	//p = 1;
 	//g = 0;
-	for(var i = 0; i<(totalComp/group)+1; i++) {
+	for(var i = 0; i<group; i++) {
 		groupArr1.push(0);
 	}
 	_.each(regList, function (row, id) {
-		p = Math.floor((Math.random()*totalComp/group)+1);
+		p = Math.floor((Math.random()*Math.ceil(totalComp/group))+1);
 		while(groupArr1[p-1]>=group) {
-			p = Math.floor((Math.random()*totalComp/group)+1);
+			p = Math.floor((Math.random()*Math.ceil(totalComp/group))+1);
 		}
 		//console.log(p);
         id += 1;

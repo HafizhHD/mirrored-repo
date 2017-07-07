@@ -38,7 +38,7 @@ $(function(){
             generateByEvent(regList, events, numberOfAttempts, generator);   
         }
         console.log(generator);
-        generator.generatePDF(fileName);
+        generator.generatePDF('',fileName);
     }
 
     function getCompetitors(regList) {
@@ -166,7 +166,7 @@ $(function(){
                 generator.addMBFScoresheet('', '', '', round, attempts);
             }   
         }
-        generator.generatePDF(competitionName +' '+ eventName +' Round '+round);
+        generator.generatePDF(competitionName, eventName +' Round '+round);
     }
 
 

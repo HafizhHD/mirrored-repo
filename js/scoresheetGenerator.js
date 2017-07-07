@@ -13,6 +13,8 @@ var scoresheetGenerator = function () {
     var canva;
     var ctx;
     var scale = 10;
+	var mbfAttempts;
+	var competitionName;
 
     this.five = [];
     this.three = [];
@@ -37,7 +39,7 @@ var scoresheetGenerator = function () {
             Event   : event,
             Round   : round
         };
-		if(round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
+		if(round === '' || round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
     
         switch(attempts) {
             case 5:
@@ -71,7 +73,9 @@ var scoresheetGenerator = function () {
             Event   : "3×3 Multi-BF",
             Round   : round
         };
-		if(round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
+		if(round === '' || round === '1' || round === '2' || round === '3' || round === '4' || round === 1) scoresheet.Round = 'Round ' + round;
+		scoresheet.attempts = attempts;
+        (this.mbf).push(scoresheet);
     }
 
     /**
@@ -79,9 +83,10 @@ var scoresheetGenerator = function () {
      * @param  {String} fileName the name of the file
      * @return {PDF}
      */
-    this.generatePDF = function (fileName) {
+    this.generatePDF = function (compName, fileName) {
         setUpCanvas();
         var doc = new jsPDF('p', 'pt');
+		competitionName = compName;
 
         var firstPage = true;
         if (this.five.length > 0){
@@ -109,16 +114,20 @@ var scoresheetGenerator = function () {
             switch ((this.mbf)[0].attempts) {
                 case 3:
                     generateMBFByAttempts(this.mbf, doc, threeAttemptsSettings);
+					mbfAttempts = 5;
                     break;
                 case 2:
                     generateMBFByAttempts(this.mbf, doc, twoAttemptsSettings);
+					mbfAttempts = 6;
                     break;
                 case 1:
                     generateMBFByAttempts(this.mbf, doc, oneAttemptSettings);
+					mbfAttempts = 8;
                     break;
             }  
         }
-        doc.save(fileName+'.pdf');
+		doc = addWaterMark(doc,Math.ceil(this.five.length/4),Math.ceil(this.three.length/5),Math.ceil(this.two.length/6),Math.ceil(this.one.length/8),Math.ceil(this.mbf.length/mbfAttempts));
+        doc.save(compName + ' ' + fileName+'.pdf');
     }
 
     function setUpCanvas() {
@@ -395,5 +404,46 @@ var scoresheetGenerator = function () {
         }
         return x;    
     }
-
+	
+	function addWaterMark(doc, al, bl, cl, dl, el) {
+		doc.setFontSize(7);
+		doc.setTextColor(200);
+		for (i = 1; i <= al; i++) {
+			doc.setPage(i);
+			//doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+			for(j=1;j<=4;j++) {
+				doc.text(50, j*(doc.internal.pageSize.height)/4 - 15+j*(2+j/4), competitionName);
+			}
+		}
+		for (i = 1; i <= bl; i++) {
+			doc.setPage(al+i);
+			//doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+			for(j=1;j<=5;j++) {
+				doc.text(50, j*(doc.internal.pageSize.height)/5 - 15+j*(2+j/5), competitionName);
+			}
+		}
+		for (i = 1; i <= cl; i++) {
+			doc.setPage(al+bl+i);
+			//doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+			for(j=1;j<=6;j++) {
+				doc.text(50, j*(doc.internal.pageSize.height)/6 - 15+j*(2+j/6), competitionName);
+			}
+		}
+		for (i = 1; i <= dl; i++) {
+			doc.setPage(al+bl+cl+i);
+			//doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+			for(j=1;j<=8;j++) {
+				doc.text(50, j*(doc.internal.pageSize.height)/8 - 15+j*(2+j/8), competitionName);
+			}
+		}
+		
+		for (i = 1; i <= el; i++) {
+			doc.setPage(al+bl+cl+dl+i);
+			//doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+			for(j=1;j<=mbfAttempts;j++) {
+				doc.text(50, j*(doc.internal.pageSize.height)/mbfAttempts - 15+j*(2+j/mbfAttempts), competitionName);
+			}
+		}
+		return doc;
+	}
 }
