@@ -151,21 +151,29 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 
 function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 	//totalGroup = 5;
-	totalComp = regList.length-1;
+	totalComp = regList.length;
 	//group = totalComp/totalGroup;
 	group = compGroup;
 	groups += "<br><br>";
+	lastGroup = totalComp%group;
+	realGroup = Math.ceil(totalComp/group);
 	//p = 1;
 	//g = 0;
-	for(var i = 0; i<group; i++) {
+	//alert(lastGroup + " " + realGroup);
+	for(var i = 0; i<realGroup; i++) {
 		groupArr1.push(0);
 	}
+	//alert(groupArr1.length);
 	_.each(regList, function (row, id) {
-		p = Math.floor((Math.random()*Math.ceil(totalComp/group))+1);
-		while(groupArr1[p-1]>=group) {
-			p = Math.floor((Math.random()*Math.ceil(totalComp/group))+1);
+		console.log(row[1]);
+		p = Math.ceil(Math.random()*(realGroup));
+		while(p>groupArr1.length || p==0 || (groupArr1[p-1]>=group||(p==groupArr1.length && groupArr1[p-1]>=lastGroup))) {
+			p = Math.ceil(Math.random()*(realGroup));
+			
 		}
+		console.log(p);
 		//console.log(p);
+		//alert(p);
         id += 1;
 		/*if(((id-2)%group)+1>=group) {
 			p += 1;
@@ -195,7 +203,13 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 		groupArr1[p-1] += 1;
 		//groups += "<div>"+row[1]+"</div>";
 		groupArr.push(obj);
+		//var str = "";
+		/*for(var i = 0; i<realGroup; i++) {
+			str += groupArr1[i] + " ";
+		}
+		console.log(str);*/
     });
+	//alert("tes1");
 	arrangeHtml();
 }
 
@@ -213,6 +227,9 @@ function arrangeHtml() {
 		//alert(groupArr[i].Name + " " + groupArr[i].Group);
 		groups += "<div>"+groupArr[i].Name+"</div>";
 	}
+	//alert("tes2");
+	groupArr1 = [];
+	groupArr = [];
 	groups += "</div>";
 }
 
