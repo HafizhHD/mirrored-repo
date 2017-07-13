@@ -122,19 +122,19 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 		count = 0;
 		g = 0;
 		var eventCode = events[e];
-		groups += "<br><div class='row'><h2><u><i><b>"+eventNames[eventCode]+"</b></i></u></h2>";
+		if (eventCode != '333fm') groups += "<br><div class='row'><h2><u><i><b>"+eventNames[eventCode]+"</b></i></u></h2>";
 		_.each(regList, function (row, id) {
 			id += 1;
 			if(count>=group) {
 				p += 1;
 				count = 0;
 			}
-			if(g!=p) {
-				groups += "<h3><b>Group "+p+"</h3></b>";
-				g=p;
-			}
 			if (eventCode != '333fm'){
 				if (row[Number(e) + 6] == '1') {
+					if(g!=p) {
+						groups += "<h3><b>Group "+p+"</h3></b>";
+						g=p;
+					}
 					if (eventCode == '333mbf') {
 						generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
 					} else {
@@ -145,7 +145,7 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 				}
 			}
         });
-		groups += "</div>";
+		if (eventCode != '333fm') groups += "</div>";
     }
 }
 
