@@ -18,12 +18,18 @@
 		<div class="container">
 			<div class="blog-header" id="title">
 				<h1 class = "blog-title"> WCA Competition Scoresheet Generator</h1>
-				<h4 class = "blog-title"> This is a modified version of <a href="http://zhouyichen.github.io/scoresheet/">zhouyichen's Scoresheet Generator</a>, please consider visiting the page.</h4>
-				<h6 class = "blog-title"> Background pic source: <a href="http://orig06.deviantart.net/6518/f/2008/333/a/c/rubiks_cube_by_logolotta.jpg">This</a></h6>
+				<h5 class = "blog-title"> This is a modified version of <a href="http://zhouyichen.github.io/scoresheet/">zhouyichen's Scoresheet Generator</a>, please consider visiting the page. Background pic source: <a href="http://orig06.deviantart.net/6518/f/2008/333/a/c/rubiks_cube_by_logolotta.jpg">This</a></h5>
 			</div>
-			<h3>Generate First Round Scoresheets + Grouping (in the Scoresheets and HTML)</h3>
-			<p>Upload the registration CSV file below: (Please keep the competition name on the filename)</p>
-			<div class='row'><div class='col-sm-5 col-xs-10'>
+			<h4>Generate First Round Scoresheets + Grouping (in the Scoresheets and HTML)</h4>
+			<p>Upload the registration CSV file below: (Please keep the competition name on the filename; or just fill the competition name below.)</p>
+			<div class='row'>
+			<div class='col-sm-4 col-xs-12'>
+				<input type="text" class="form-control" placeholder="Competition Name" id='compName1'>
+				<br>
+				Competitors per Group
+				<input type="number" class="form-control" id='compGroup1' min="1" value="4">
+			</div>
+			<div class='col-sm-5 col-xs-10'>
 				<!-- <p><input type="file" class="filestyle" name="xlfile" data-size="sm" id="xlf"></p> -->
 				<p><input type="file" class="filestyle" data-size="sm" id="csv"></p>
 				<p>
@@ -49,17 +55,13 @@
 				</p>
 				<!-- <button type="button" class="btn btn-default" id='generate'> Generate</button> -->
 			</div></div>
-			<div class='col-sm-4 col-xs-12'>
-				Competitors per Group
-				<input type="number" class="form-control" id='compGroup1' min="1" value="4">
-			</div>
 			<br><br><br>
 			<div class='row' id='numberOfAttempts'></div>
 			<br>
 			<button type="button" class="btn btn-default" id='generate'> Generate</button>
 			<hr>
 			<div>
-				<h3>Generate Empty Scoresheets</h3>
+				<h4>Generate Empty Scoresheets</h4>
 				<div class='row'>
 					<div class='col-sm-4 col-xs-12'>
 						<select class="form-control" id='selectEvent'></select>

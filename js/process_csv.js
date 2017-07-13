@@ -1,11 +1,13 @@
 var csvInput = document.getElementById('csv');
 var compName;
+var compNameTest;
 
 document.getElementById('csv').onchange = function() {
 	compName = document.getElementById('csv').value;
-	compName = compName.slice(0,compName.length-17);
 	compName = compName.replace(/^.*\\/, '');
 	compname = compName.replace(/.*[\/\\]/, '');
+	compNameTest = compName.split("-");
+	compName = compNameTest[0];
 }
 
 
@@ -56,6 +58,7 @@ $(function(){
             if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
 			else generateByEventAll(events, compGroup, numberOfAttempts, generator);
         }
+		if($('#compName1').val() != '') compName = $('#compName1').val();
         generator.generatePDF(compName, 'First Round Scoresheets');
 		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
 		window.open('','').document.write(groups);
@@ -115,6 +118,7 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 	group = compGroup;
 	groups += "<br><br>";
     for (var e in events) {
+		p=1;
 		count = 0;
 		g = 0;
 		var eventCode = events[e];
