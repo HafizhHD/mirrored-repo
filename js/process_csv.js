@@ -45,8 +45,8 @@ function readFile (evt) {
 
 $(function(){
     $('#generate').mouseup(function (){
-		
-		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>Competition Grouping</h1></div><p>* Please copy the groups before leaving!</p>";
+		if($('#compName1').val() != '') compName = $('#compName1').val();
+		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>" + compName + " Competition Grouping</h1></div><p>* Please copy the groups before leaving!</p>";
         var generator = new scoresheetGenerator();
         var numberOfAttempts = getNumberOfAttempts();
 		var compGroup = $('#compGroup1').val();
@@ -58,7 +58,6 @@ $(function(){
             if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
 			else generateByEventAll(events, compGroup, numberOfAttempts, generator);
         }
-		if($('#compName1').val() != '') compName = $('#compName1').val();
         generator.generatePDF(compName, 'First Round Scoresheets');
 		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
 		window.open('','').document.write(groups);
@@ -128,11 +127,12 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 			if(count>=group) {
 				p += 1;
 				count = 0;
+				groups += "</div>";
 			}
 			if (eventCode != '333fm'){
 				if (row[Number(e) + 6] == '1') {
 					if(g!=p) {
-						groups += "<h3><b>Group "+p+"</h3></b>";
+						groups += "<div class='col-sm-3 col-xs-12'><h3><b>Group "+p+"</h3></b>";
 						g=p;
 					}
 					if (eventCode == '333mbf') {
@@ -145,6 +145,8 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 				}
 			}
         });
+		if(count<group && count != 0) groups += "</div>";
+		groups+="<br><br>";
 		if (eventCode != '333fm') groups += "</div>";
     }
 }
@@ -219,10 +221,10 @@ function arrangeHtml() {
 	});
 	for(var i = 0; i<groupArr.length; i++) {
 		if(i!==0) {
-			if(groupArr[i].Group > groupArr[i-1].Group) groups += "</div><div class='row'><br><h3><b>Group "+groupArr[i].Group+"</h3></b>";
+			if(groupArr[i].Group > groupArr[i-1].Group) groups += "<br></div><div class='col-sm-3 col-xs-12'><h3><b>Group "+groupArr[i].Group+"</h3></b>";
 		}
 		else {
-			groups += "<div class='row'><br><h3><b>Group "+groupArr[i].Group+"</h3></b>";
+			groups += "<br><div group='row'><div class='col-sm-3 col-xs-12'><h3><b>Group "+groupArr[i].Group+"</h3></b>";
 		}
 		//alert(groupArr[i].Name + " " + groupArr[i].Group);
 		groups += "<div>"+groupArr[i].Name+"</div>";
@@ -230,7 +232,7 @@ function arrangeHtml() {
 	//alert("tes2");
 	groupArr1 = [];
 	groupArr = [];
-	groups += "</div>";
+	groups += "<br></div></div><br>";
 }
 
 function generateByEventAll(events, compGroup, numberOfAttempts, generator) {
