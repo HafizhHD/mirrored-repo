@@ -60,6 +60,12 @@ $(function(){
         generator.generatePDF(compName, 'First Round Scoresheets');
 		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
 		window.open('','').document.write(groups);
+		compName = '';
+		compName = document.getElementById('csv').value;
+		compName = compName.replace(/^.*\\/, '');
+		compname = compName.replace(/.*[\/\\]/, '');
+		compNameTest = compName.split("-");
+		compName = compNameTest[0];
     });
 });
 
@@ -132,17 +138,14 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 		for(var i = 0; i<realGroup; i++) {
 			groupArr1.push(0);
 		}
-		console.log(groupArr1.length);
 		_.each(regList, function (row, id) {
 			id += 1;
 			if (eventCode != '333fm'){
 				if (row[Number(e) + 6] == '1') {
-					console.log(row[1]);
 					p = Math.ceil(Math.random()*(realGroup));
 					while(p>groupArr1.length || p==0 || (groupArr1[p-1]>=group||(p==groupArr1.length && groupArr1[p-1]>=lastGroup))) {
 						p = Math.ceil(Math.random()*(realGroup));
 					}
-					//console.log(p);
 					var obj = {
 						Name	: row[1],
 						Group	: p
@@ -169,20 +172,15 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 	groups += "<br><br>";
 	lastGroup = totalComp%group==0? group : totalComp%group;
 	realGroup = Math.ceil(totalComp/group);
-	//p = 1;
-	//g = 0;
-	console.log(lastGroup + " " + realGroup);
 	for(var i = 0; i<realGroup; i++) {
 		groupArr1.push(0);
 	}
 	_.each(regList, function (row, id) {
-		console.log(row[1]);
 		p = Math.ceil(Math.random()*(realGroup));
 		while(p>groupArr1.length || p==0 || (groupArr1[p-1]>=group||(p==groupArr1.length && groupArr1[p-1]>=lastGroup))) {
 			p = Math.ceil(Math.random()*(realGroup));
 			
 		}
-		//console.log(p);
         id += 1;
 		var obj = {
 			Name	: row[1],
