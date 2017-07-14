@@ -140,6 +140,8 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 		}
 		_.each(regList, function (row, id) {
 			id += 1;
+			name = row[1];
+			if(row[1].length>32) name = row[1].substr(0,32);
 			if (eventCode != '333fm'){
 				if (row[Number(e) + 6] == '1') {
 					p = Math.ceil(Math.random()*(realGroup));
@@ -147,13 +149,13 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 						p = Math.ceil(Math.random()*(realGroup));
 					}
 					var obj = {
-						Name	: row[1],
+						Name	: name,
 						Group	: p
 					};
 					if (eventCode == '333mbf') {
-						generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
+						generator.addMBFScoresheet(name, id, p, 1, numberOfAttempts[eventCode]);
 					} else {
-						generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
+						generator.addScoresheet(name, id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
 					}
 					groupArr1[p-1] += 1;
 					groupArr.push(obj);
@@ -176,6 +178,8 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 		groupArr1.push(0);
 	}
 	_.each(regList, function (row, id) {
+		name = row[1];
+		if(row[1].length>32) name = row[1].substr(0,32);
 		p = Math.ceil(Math.random()*(realGroup));
 		while(p>groupArr1.length || p==0 || (groupArr1[p-1]>=group||(p==groupArr1.length && groupArr1[p-1]>=lastGroup))) {
 			p = Math.ceil(Math.random()*(realGroup));
@@ -183,7 +187,7 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 		}
         id += 1;
 		var obj = {
-			Name	: row[1],
+			Name	: name,
 			Group	: p
 		};
         for (var e in events) {
@@ -193,9 +197,9 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
             }
             if (row[Number(e) + 6] == '1') {
 				if (eventCode == '333mbf') {
-					generator.addMBFScoresheet(row[1], id, p, 1, numberOfAttempts[eventCode]);
+					generator.addMBFScoresheet(name, id, p, 1, numberOfAttempts[eventCode]);
 				} else {
-					generator.addScoresheet(row[1], id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
+					generator.addScoresheet(name, id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
 				}
 			}
         }
