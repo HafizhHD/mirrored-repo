@@ -157,11 +157,11 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 	//group = totalComp/totalGroup;
 	group = compGroup;
 	groups += "<br><br>";
-	lastGroup = totalComp%group;
+	lastGroup = totalComp%group==0? group : totalComp%group;
 	realGroup = Math.ceil(totalComp/group);
 	//p = 1;
 	//g = 0;
-	//alert(lastGroup + " " + realGroup);
+	console.log(lastGroup + " " + realGroup);
 	for(var i = 0; i<realGroup; i++) {
 		groupArr1.push(0);
 	}
