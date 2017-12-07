@@ -19,6 +19,10 @@ $(function(){
     function isGroupByPlayer(){
         return ($('input[name=grouping]:checked', '#grouping').val() == "groupByPlayer");
     }
+	
+	function isScSmall() {
+		return ($('input[name=sctype2]:checked', '#sctype2').val() == "smallSc2");
+	}
 
     function generateFirstRounds(fileArray, groupByPlayer) {
         var generator = new scoresheetGenerator();
@@ -158,15 +162,28 @@ $(function(){
     }
 
     function generateEmpty(eventName, round, attempts, number, competitionName) {
-        var generator = new scoresheetGenerator();
-        for (var i = 0; i < number; i++) {
-            if (eventName != '3×3 Multi-BF') {
-                generator.addScoresheet('', '', '', eventName, round, attempts);
-            } else {
-                generator.addMBFScoresheet('', '', '', round, attempts);
-            }   
-        }
-        generator.generatePDF(competitionName, eventName +' Round '+round);
+        if(isScSmall) {
+			var generator = new scoresheetGenerator1();
+			for (var i = 0; i < number; i++) {
+				if (eventName != '3×3 Multi-BF') {
+					generator.addScoresheet('', '', '', eventName, round, attempts);
+				} else {
+					generator.addMBFScoresheet('', '', '', round, attempts);
+				}   
+			}
+			generator.generatePDF(competitionName, eventName +' Round '+round);
+		}
+		else {
+			var generator = new scoresheetGenerator1();
+			for (var i = 0; i < number; i++) {
+				if (eventName != '3×3 Multi-BF') {
+					generator.addScoresheet('', '', '', eventName, round, attempts);
+				} else {
+					generator.addMBFScoresheet('', '', '', round, attempts);
+				}   
+			}
+			generator.generatePDF(competitionName, eventName +' Round '+round);
+		}
     }
 
 

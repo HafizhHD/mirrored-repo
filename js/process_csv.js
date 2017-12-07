@@ -26,6 +26,10 @@ function isGroupPerEvent(){
 	return ($('input[name=divGroup]:checked', '#divGroup').val() == "divGroupByEvent");
 }
 
+function isScSmall() {
+	return ($('input[name=sctype]:checked', '#sctype').val() == "smallSc");
+}
+
 function readFile (evt) {
     var files = evt.target.files;
     var file = files[0];           
@@ -46,18 +50,34 @@ $(function(){
     $('#generate').mouseup(function (){
 		if($('#compName1').val() != '') compName = $('#compName1').val();
 		groups = "<html><head><meta charset = 'UTF-8'><link rel='stylesheet' href='bootstrap/bootstrap.min.css'><link rel='stylesheet' href='bootstrap/bootstrap-theme.min.css'><title>Grouping</title></head><body><div class='container'><div class='blog-header' id='title'><h1 class = 'blog-title'>" + compName + " Competition Grouping</h1></div><p>* Please copy the groups before leaving!</p>";
-        var generator = new scoresheetGenerator();
-        var numberOfAttempts = getNumberOfAttempts();
-		var compGroup = $('#compGroup1').val();
-        if (isGroupByPlayer()) {
-            if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
-			else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
-        }
-        else { // group by events
-            if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
-			else generateByEventAll(events, compGroup, numberOfAttempts, generator);
-        }
-        generator.generatePDF(compName, 'First Round Scoresheets');
+        if(isScSmall()) {
+			var generator = new scoresheetGenerator1();
+			var numberOfAttempts = getNumberOfAttempts();
+			var compGroup = $('#compGroup1').val();
+			if (isGroupByPlayer()) {
+				if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
+				else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
+			}
+			else { // group by events
+				if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
+				else generateByEventAll(events, compGroup, numberOfAttempts, generator);
+			}
+			generator.generatePDF(compName, 'First Round Scoresheets');
+		}
+		else {
+			var generator = new scoresheetGenerator();
+			var numberOfAttempts = getNumberOfAttempts();
+			var compGroup = $('#compGroup1').val();
+			if (isGroupByPlayer()) {
+				if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
+				else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
+			}
+			else { // group by events
+				if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
+				else generateByEventAll(events, compGroup, numberOfAttempts, generator);
+			}
+			generator.generatePDF(compName, 'First Round Scoresheets');
+		}
 		groups+="<br><br></div><script src='bootstrap/bootstrap.min.js'></script><script src='bootstrap/bootstrap-filestyle.min.js'></script></body></html>";
 		window.open('','').document.write(groups);
 		compName = '';
