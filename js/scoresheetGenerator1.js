@@ -300,9 +300,9 @@ var scoresheetGenerator1 = function () {
 
     var columns1 = [
         {title: ' ', key: 'attempt', width : 5},
-        {title: 'Final Result', key: 'result', width : 290}, 
-        {title: 'Judge Initial', key: 'js', width : 70}, 
-        {title: 'Player Sign', key: 'ps', width : 70}
+        {title: 'Result ([Pen]+Time+[Pen]=Result)', key: 'result', width : 400}, 
+        {title: 'Judge', key: 'js', width : 50}, 
+        {title: 'Player', key: 'ps', width : 50}
     ];
 
     var MBFcolumns = [
