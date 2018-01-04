@@ -76,9 +76,9 @@ var eventDefaults = {
         maxAttempts: 3
     },
     '3×3 With Feet' : {
-        attempts : 3,
-        number : 5,
-        maxAttempts: 3
+        attempts : 5,
+        number : 4,
+        maxAttempts: 5
     },
 
     '3×3 Multi-BF' : {

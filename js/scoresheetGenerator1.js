@@ -185,11 +185,15 @@ var scoresheetGenerator1 = function () {
 			doc.setFontStyle('bold');
 			doc.setFontSize(14);
 			asd = 0;
-			if(settings.number == 5) asd = 30;
-			else if(settings.number == 3) asd = 25;
-			else if(settings.number == 2) asd = 20;
-			else if(settings.number == 1) asd = 15;
+			if(settings.number == 5) asd = 72;
+			else if(settings.number == 3) asd = 64;
+			else if(settings.number == 2) asd = 40;
+			else if(settings.number == 1) asd = 16;
 			doc.text(competitionName, 10 + xPlus, y-asd);
+			if(settings.number == 5) y-=asd/1.4;
+			else if(settings.number == 3) y-=asd/1.3;
+			else if(settings.number == 2) y-=asd/1.2;
+			else if(settings.number == 1) y-=asd/1.5;
             var scoresheet = generator[sc];
             doc.autoTable(header1, [scoresheet], headerOptions(doc, y, settings.headerPlus1, xPlus));
 			doc.autoTable(header2, [scoresheet], headerOptions(doc, y, settings.headerPlus2, xPlus));
@@ -211,11 +215,15 @@ var scoresheetGenerator1 = function () {
 			doc.setFontStyle('bold');
 			doc.setFontSize(14);
 			asd = 0;
-			if(settings.number == 5) asd = 30;
-			else if(settings.number == 3) asd = 25;
-			else if(settings.number == 2) asd = 20;
-			else if(settings.number == 1) asd = 15;
+			if(settings.number == 5) asd = 72;
+			else if(settings.number == 3) asd = 64;
+			else if(settings.number == 2) asd = 40;
+			else if(settings.number == 1) asd = 16;
 			doc.text(competitionName, 10 + xPlus, y-asd);
+			if(settings.number == 5) y-=asd/1.4;
+			else if(settings.number == 3) y-=asd/1.3;
+			else if(settings.number == 2) y-=asd/1.2;
+			else if(settings.number == 1) y-=asd/1.5;
             doc.autoTable(header1, [sc], headerOptions(doc, y, settings.headerPlus1, xPlus));
 			doc.autoTable(header2, [sc], headerOptions(doc, y, settings.headerPlus2, xPlus));
             doc.autoTable(columns1, data, attemptsOptions(doc, y, settings.attempsPlus, xPlus, headerSpacing));
@@ -250,11 +258,15 @@ var scoresheetGenerator1 = function () {
 			doc.setFontStyle('bold');
 			doc.setFontSize(14);
 			asd = 0;
-			if(settings.number == 5) asd = 30;
-			else if(settings.number == 3) asd = 25;
-			else if(settings.number == 2) asd = 20;
-			else if(settings.number == 1) asd = 15;
+			if(settings.number == 5) asd = 72;
+			else if(settings.number == 3) asd = 64;
+			else if(settings.number == 2) asd = 40;
+			else if(settings.number == 1) asd = 16;
 			doc.text(competitionName, 10 + xPlus, y-asd);
+			if(settings.number == 5) y-=asd/1.4;
+			else if(settings.number == 3) y-=asd/1.3;
+			else if(settings.number == 2) y-=asd/1.2;
+			else if(settings.number == 1) y-=asd/1.5;
             doc.autoTable(header1, [sc], headerOptions(doc, y, settings.headerPlus1, xPlus));
 			doc.autoTable(header2, [sc], headerOptions(doc, y, settings.headerPlus2, xPlus));
             doc.autoTable(columns1, data, attemptsOptions(doc, y, settings.attempsPlus, xPlus, headerSpacing));
@@ -276,11 +288,15 @@ var scoresheetGenerator1 = function () {
 			doc.setFontStyle('bold');
 			doc.setFontSize(14);
 			asd = 0;
-			if(settings.number == 5) asd = 30;
-			else if(settings.number == 3) asd = 25;
-			else if(settings.number == 2) asd = 20;
-			else if(settings.number == 1) asd = 15;
+			if(settings.number == 5) asd = 72;
+			else if(settings.number == 3) asd = 64;
+			else if(settings.number == 2) asd = 40;
+			else if(settings.number == 1) asd = 16;
 			doc.text(competitionName, 10 + xPlus, y-asd);
+			if(settings.number == 5) y-=asd/1.4;
+			else if(settings.number == 3) y-=asd/1.3;
+			else if(settings.number == 2) y-=asd/1.2;
+			else if(settings.number == 1) y-=asd/1.5;
             doc.autoTable(header1, [sc], headerOptions(doc, y, settings.headerPlus1, xPlus));
 			doc.autoTable(header2, [sc], headerOptions(doc, y, settings.headerPlus2, xPlus));
             doc.autoTable(columns1, data, attemptsOptions(doc, y, settings.attempsPlus, xPlus, headerSpacing));
@@ -389,7 +405,7 @@ var scoresheetGenerator1 = function () {
                 right : leftAndRight,
             },
             startY: yStart + yPlus,
-            lineHeight : 25,
+            lineHeight : 36,
             renderHeaderCell: function (x, y, width, height, key, value, settings) {
                 doc.setFillColor(255);
                 doc.setTextColor(0);
