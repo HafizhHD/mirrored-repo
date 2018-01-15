@@ -54,13 +54,14 @@ $(function(){
 			var generator = new scoresheetGenerator1();
 			var numberOfAttempts = getNumberOfAttempts();
 			var compGroup = $('#compGroup1').val();
+			var compGroupStart = $('#compGroupStart').val();
 			if (isGroupByPlayer()) {
-				if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
-				else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
+				if(isGroupPerEvent()) generateByPlayer(events, compGroup, compGroupStart, numberOfAttempts, generator);
+				else generateByPlayerAll(events, compGroup, compGroupStart, numberOfAttempts, generator);
 			}
 			else { // group by events
-				if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
-				else generateByEventAll(events, compGroup, numberOfAttempts, generator);
+				if(isGroupPerEvent()) generateByEvent(events, compGroup, compGroupStart, numberOfAttempts, generator);   
+				else generateByEventAll(events, compGroup, compGroupStart, numberOfAttempts, generator);
 			}
 			generator.generatePDF(compName, 'First Round Scoresheets');
 		}
@@ -68,13 +69,14 @@ $(function(){
 			var generator = new scoresheetGenerator();
 			var numberOfAttempts = getNumberOfAttempts();
 			var compGroup = $('#compGroup1').val();
+			var compGroupStart = $('#compGroupStart').val();
 			if (isGroupByPlayer()) {
-				if(isGroupPerEvent()) generateByPlayer(events, compGroup, numberOfAttempts, generator);
-				else generateByPlayerAll(events, compGroup, numberOfAttempts, generator);
+				if(isGroupPerEvent()) generateByPlayer(events, compGroup, compGroupStart, numberOfAttempts, generator);
+				else generateByPlayerAll(events, compGroup, compGroupStart, numberOfAttempts, generator);
 			}
 			else { // group by events
-				if(isGroupPerEvent()) generateByEvent(events, compGroup, numberOfAttempts, generator);   
-				else generateByEventAll(events, compGroup, numberOfAttempts, generator);
+				if(isGroupPerEvent()) generateByEvent(events, compGroup, compGroupStart, numberOfAttempts, generator);   
+				else generateByEventAll(events, compGroup, compGroupStart, numberOfAttempts, generator);
 			}
 			generator.generatePDF(compName, 'First Round Scoresheets');
 		}
@@ -124,15 +126,15 @@ function getNumberOfAttempts() {
     return results;
 }
 
-function generateByPlayer(events, compGroup, numberOfAttempts, generator) {
-	generateByEvent(events, compGroup, numberOfAttempts, generator);
+function generateByPlayer(events, compGroup, compGroupStart, numberOfAttempts, generator) {
+	generateByEvent(events, compGroup, compGroupStart, numberOfAttempts, generator);
     generator.five = _.sortBy(generator.five, 'ID');
     generator.three = _.sortBy(generator.three, 'ID');
     generator.two = _.sortBy(generator.two, 'ID');
     generator.one = _.sortBy(generator.one, 'ID');
 }
 
-function generateByEvent(events, compGroup, numberOfAttempts, generator) {
+function generateByEvent(events, compGroup, compGroupStart, numberOfAttempts, generator) {
 	group = compGroup;
 	groups += "<br><br>";
     for (var e in events) {
@@ -168,6 +170,7 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 					while(p>groupArr1.length || p==0 || (groupArr1[p-1]>=group||(p==groupArr1.length && groupArr1[p-1]>=lastGroup))) {
 						p = Math.ceil(Math.random()*(realGroup));
 					}
+					p+=compGroupStart-1;
 					var obj = {
 						Name	: name,
 						Group	: p
@@ -177,6 +180,7 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
 					} else {
 						generator.addScoresheet(name, id, p, eventNames[eventCode], 1, numberOfAttempts[eventCode]);
 					}
+					p-=compGroupStart-1;
 					groupArr1[p-1] += 1;
 					groupArr.push(obj);
 				}
@@ -188,7 +192,7 @@ function generateByEvent(events, compGroup, numberOfAttempts, generator) {
     }
 }
 
-function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
+function generateByPlayerAll(events, compGroup, compGroupStart, numberOfAttempts, generator) {
 	totalComp = regList.length;
 	group = compGroup;
 	groups += "<br><br>";
@@ -205,6 +209,7 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 			p = Math.ceil(Math.random()*(realGroup));
 			
 		}
+		p+=compGroupStart-1;
         id += 1;
 		var obj = {
 			Name	: name,
@@ -223,6 +228,7 @@ function generateByPlayerAll(events, compGroup, numberOfAttempts, generator) {
 				}
 			}
         }
+		p-=compGroupStart-1;
 		groupArr1[p-1] += 1;
 		groupArr.push(obj);
     });
